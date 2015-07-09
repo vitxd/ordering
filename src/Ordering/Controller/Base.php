@@ -3,6 +3,7 @@
 namespace Ordering\Controller;
 
 use Ordering\Misc\View;
+use Ordering\Model\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,7 +35,7 @@ abstract class Base
 		$class      	    = explode("\\", get_class($this));
 		$class_name 		= array_pop($class);
 		$this->controller 	= $class_name;
-
+		$this->view->setDirectory(strtolower(substr($this->controller,  0, strpos($this->controller, 'Controller'))));
 	}
 
 	/**
@@ -59,9 +60,10 @@ abstract class Base
 			$this->app->abort(404, "Page $page does not exist.");
 		}
 
-		$this->view->is_logged  = $this->app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY');
-		$this->view->user 		= $this->app['security']->getToken()->getUser();
-		$this->view->setDirectory(strtolower(substr($this->controller,  0, strpos($this->controller, 'Controller'))));
+		$user 					= $this->app['security']->getToken()->getUser();
+		$this->view->user 		= $user;
+		$this->view->is_logged 	= ($user instanceof User);
+
 		$this->view->setFilename($page . '.twig');
 		return $this->{$action}();
 	}

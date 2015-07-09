@@ -72,7 +72,7 @@ class View
 	 * @param null $file
 	 * @return mixed
 	 */
-	public function render($dir = null, $file = null) {
+	public function render($file = null, $dir = null) {
 		if($dir !== null)  $this->setDirectory($dir);
 		if($file !== null) $this->setFilename($file);
 

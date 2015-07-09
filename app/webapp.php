@@ -13,7 +13,7 @@ $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 $app['twig.options.cache'] = $app['cache.path'];
 
 $app['session.storage.options'] = [
-	'cookie_lifetime' 	=> 60
+	'cookie_lifetime' 	=> 360
 ];
 
 $app->register(new Silex\Provider\SessionServiceProvider(), array(
@@ -46,27 +46,35 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	),
 	'twig.path' => [FRAMEWORK_HOME_DIR . '/../src/views']
 ));
-
+$app->register(new Silex\Provider\RememberMeServiceProvider());
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 	'security.firewalls' => [
-		'logged_in' => [
-			'pattern' => '^/',
-			'form' => array(
-				'login_path' => '/login',
-				'check_path' => '/login_check',
-				'username_parameter' => 'user[email]',
-				'password_parameter' => 'user[password]',
-			),
-			'logout' => array('logout_path' => '/logout'),
+
+		'secure' => [
 			'anonymous' => true,
-			'users' => $app->share(function () use ($app) {
+			'pattern' => '^/.*$',
+			'form' 		=> [
+				'login_path' 			=> '/user/login',
+				'check_path' 			=> '/me/login_check',
+				'username_parameter' 	=> 'user[email]',
+				'password_parameter' 	=> 'user[password]',
+			],
+			'logout' 	=> ['logout_path' => '/user/logout'],
+			'users' 	=> $app->share(function () use ($app) {
 				return new Ordering\Repository\UserRepository($app);
 			}),
 		],
+//		'login' => [
+//			'pattern' => '^/(login)?',
+//			'anonymous' => true,
+//		],
 	],
-	'security.role_hierarchy' => array(
-			'ROLE_ADMIN' => array('ROLE_USER'),
-	),
+	'security.access_rules' => array(
+		['^/me', 'ROLE_LOGGED_IN'],
+	)
+//		['path' => '/me$', 	'role' => 'ROLE_LOGGED_IN'],
+//		['path' => '/', 	'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
+//	),
 ));
 
 $app['view'] = $app->share(function($app) {

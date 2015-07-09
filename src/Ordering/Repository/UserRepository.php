@@ -30,7 +30,8 @@ class UserRepository extends Base implements UserProviderInterface
 		$user
 			->setId($data['id'])
 			->setEmail($data['email'])
-			->setName($data['name'])
+			->setFirstname($data['firstname'])
+			->setSurname($data['surname'])
 			->setPassword($data['password'])
 			->setSalt($data['salt'])
 			->setCDate($data['c_date']);
@@ -51,9 +52,10 @@ class UserRepository extends Base implements UserProviderInterface
 	public function save(User $user)
 	{
 		$data = [
-			'id' 	=> $user->getId(),
-			'name' 	=> $user->getName(),
-			'email'	=> $user->getEmail(),
+			'id' 		=> $user->getId(),
+			'firstname' => $user->getFirstname(),
+			'surname' 	=> $user->getSurname(),
+			'email'		=> $user->getEmail(),
 		];
 
 		if (strlen($user->getPassword()) != 88)

@@ -9,7 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 	protected $id;
-	protected $name;
+	protected $firstname;
+	protected $surname;
 	protected $email;
 	protected $salt;
 	protected $password;
@@ -38,18 +39,18 @@ class User implements UserInterface
 	/**
 	 * @return mixed
 	 */
-	public function getName()
+	public function getFirstname()
 	{
-		return $this->name;
+		return $this->firstname;
 	}
 
 	/**
-	 * @param mixed $name
+	 * @param mixed $firstname
 	 * @return User
 	 */
-	public function setName($name)
+	public function setFirstname($firstname)
 	{
-		$this->name = $name;
+		$this->firstname = $firstname;
 		return $this;
 	}
 
@@ -134,7 +135,7 @@ class User implements UserInterface
 	public function getRoles()
 	{
 		return [
-			'LOGGED_IN'
+			$this->getRole()
 		];
 	}
 
@@ -186,6 +187,29 @@ class User implements UserInterface
 	 */
 	public function getRole()
 	{
-		return 'LOGGED_IN';
+		return 'ROLE_LOGGED_IN';
+	}
+
+	/**
+	 * @param mixed $surname
+	 * @return User
+	 */
+	public function setSurname($surname)
+	{
+		$this->surname = $surname;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getSurname()
+	{
+		return $this->surname;
+	}
+
+	public function getName()
+	{
+		return $this->getFirstname() . ' ' . $this->getSurname();
 	}
 }

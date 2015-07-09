@@ -5,25 +5,35 @@ namespace Ordering\Controller;
 
 use Ordering\Model\User;
 
-class LoginController extends Base
+class UserController extends Base
 {
 	public function signUpAction()
 	{
+		$this->view->error = '';
 		if ($this->getRequest()->isMethod('POST'))
 		{
 			$data = $this->getRequest()->request->get('user', null);
 
 			if (is_array($data))
 			{
-				$user = new User;
-				$user
-					->setEmail($data['email'])
-					->setName($data['name'])
-					->setPassword($data['password']);
+				if ($data['password1'] == $data['password2'])
+				{
 
-				$this->getRepository('users')->save($user);
+					$user = new User;
+					$user
+						->setEmail($data['email'])
+						->setFirstname($data['firstname'])
+						->setSurname($data['surname'])
+						->setPassword($data['password1']);
 
-				return $this->app->redirect('/login');
+					$this->getRepository('users')->save($user);
+
+					return $this->app->redirect('/user/login');
+				}
+				else
+				{
+					$this->view->error = 'Two passwords must match';
+				}
 			}
 
 		}
