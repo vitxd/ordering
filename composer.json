@@ -1,0 +1,24 @@
+{
+  "name": "kobas/ordering",
+  "require": {
+    "silex/silex": "^1.3",
+    "symfony/twig-bridge": "^2.7",
+    "twig/twig": "^1.18",
+    "monolog/monolog": "^1.14",
+    "symfony/security": "~2.3",
+    "doctrine/dbal": "^2.5"
+  },
+  "authors": [
+    {
+      "name": "Vittorio Delsignore",
+      "email": "vittorio@kobas.co.uk"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Ordering\\" : [
+        "src/Ordering/"
+      ]
+    }
+  }
+}

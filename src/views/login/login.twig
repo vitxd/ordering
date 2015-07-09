@@ -1,0 +1,15 @@
+{% extends 'layouts/core.twig' %}
+{% block content %}
+	<form action="{{ path('login_check') }}" method="post">
+		{{ error }}
+		<input type="text" name="user[email]" value="{{ last_username }}" />
+		<input type="password" name="user[password]" value="" />
+		<input type="submit" />
+	</form>
+
+
+
+
+
+	<a href="/sign-up">Sign Up!</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'layouts/core.twig' %}
+{% block content %}
+<h1>Hello!</h1>
+<form action="/login" method="post">
+	<input type="text" name="email" />
+	<input type="password" name="password" />
+	<button>Login</button>
+</form>
+	<a href="/sign-up">Sign Up!</a>
+{% endblock %}
