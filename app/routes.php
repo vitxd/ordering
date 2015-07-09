@@ -15,7 +15,8 @@ $app->match('/user/{page}', 'user.controller:route')
 	->assert('page', 'login|sign-up')
 ;
 
-$app->match('/order/{page}', 'user.controller:route');
+$app->match('/order/{page}', 'order.controller:route')
+	->value('page', 'index');
 
 $app
 	->match('/{page}', 'index.controller:route')
