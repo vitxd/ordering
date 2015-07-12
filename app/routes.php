@@ -18,6 +18,8 @@ $app->match('/user/{page}', 'user.controller:route')
 $app->match('/order/{page}', 'order.controller:route')
 	->value('page', 'index');
 
+$app->match('/order/action/{page}', 'orderAction.controller:route');
+
 $app
 	->match('/{page}', 'index.controller:route')
 	->value('page', 'index');

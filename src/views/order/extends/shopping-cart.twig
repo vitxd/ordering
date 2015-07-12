@@ -1,0 +1,58 @@
+{% block shopping_cart %}
+    {% set showShoppingCart = true %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ flashMessage }}</div>
+        {% set showShoppingCart = false %}
+    {% endfor %}
+
+    {% if showShoppingCart == true %}
+        {% if is_logged == false %}
+            <div class="alert alert-danger">In order to submit an order, you have to be logged in! Click <a href="/user/login" title="login">here</a> to log in.</div>
+        {% endif %}
+        {% set productsCount = products|length %}
+        <div data-no-products="true" class="alert alert-warning" {% if 0 < productsCount %}style="display: none;{% endif %}">Currently you have 0 products in the shopping cart. Click <a href="/order" title="order">here</a> to select some products.</div>
+        {% if 0 < productsCount %}
+            <table class="table table-hover" data-shopping-cart-table="true">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Cost / Unit</th>
+                    <th>Quantity</th>
+                    <th>Total cost</th>
+                    <th class="text-right">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set orderTotal = 0 %}
+                {% for product in products %}
+                    {% set productQuantity = shoppingCart[product.getId()] %}
+                    {% set totalCost       = productQuantity * product.getCost() %}
+                    {% set orderTotal      = orderTotal + totalCost  %}
+                    <tr>
+                        <td>{{ product.getId() }}</td>
+                        <td>{{ product.getName() }}</td>
+                        <td>{{ product.getCost() }}</td>
+                        <td>{{ productQuantity }}</td>
+                        <td data-total-cost="{{ totalCost|number_format(2) }}">{{ totalCost|number_format(2) }}</td>
+                        <td class="text-right">
+                            <button data-remove-from-cart="{{ product.getId() }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove from cart</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td data-order-total="true">{{ orderTotal|number_format(2) }}</td>
+                        <td class="text-right">
+                            <form method="post" action="">
+                                <button type="submit" class="btn btn-success">Send order</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        {% endif %}
+    {% endif %}
+{% endblock %}

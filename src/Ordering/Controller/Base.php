@@ -115,4 +115,19 @@ abstract class Base
 		$this->path_args = $args;
 	}
 
+    /**
+     * Get service
+     *
+     * @param string $serviceName
+     * @return object
+     * @throws \Exception
+     */
+    protected function getService($serviceName)
+    {
+        if($this->app[sprintf('service.%1$s', $serviceName)] === null) {
+            throw new \Exception(sprintf('Service %1$s does not exist.', $serviceName));
+        }
+
+        return $this->app[sprintf('service.%1$s', $serviceName)];
+    }
 }

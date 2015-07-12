@@ -26,4 +26,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider());
 
 require __DIR__ . '/repositories.php';
 
+require __DIR__ . '/services.php';
+
 return $app;

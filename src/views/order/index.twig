@@ -1,10 +1,28 @@
 {% extends 'layouts/core.twig' %}
+
+{% use 'order/extends/products.twig' %}
+
 {% block content %}
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Order</h1>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Order</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ block('products') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/order/checkout" title="checkout" class="btn btn-primary">check out</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>var _ACTIONS_URL = '{{ actionsUrl }}';</script>
+    <script src="/js/order/main.js"></script>
 {% endblock %}
