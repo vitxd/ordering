@@ -13,7 +13,7 @@ $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 $app['twig.options.cache'] = $app['cache.path'];
 
 $app['session.storage.options'] = [
-	'cookie_lifetime' 	=> 360
+	'cookie_lifetime' 	=> 0
 ];
 
 $app->register(new Silex\Provider\SessionServiceProvider(), array(

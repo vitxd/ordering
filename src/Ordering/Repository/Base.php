@@ -4,7 +4,7 @@ namespace Ordering\Repository;
 
 use Silex\Application;
 
-class Base
+abstract class Base
 {
 	/**
 	 * @var Application
@@ -20,4 +20,30 @@ class Base
 		$this->app = $app;
 		$this->db  = $app['db'];
 	}
+
+    /**
+     * Build models
+     *
+     * This method will create based on the array data multiple 'Object' instances.
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function buildModels(array $data)
+    {
+        $objects = [];
+        foreach ($data as $key => $value) {
+            $objects[$key] = $this->buildModel($value);
+        }
+
+        return $objects;
+    }
+
+    /**
+     * Build model
+     *
+     * @param array $data
+     * @return object
+     */
+    abstract protected function buildModel(array $data);
 }

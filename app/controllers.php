@@ -14,3 +14,6 @@ $app['user.controller'] = $app->share(function(Application $app){
 $app['order.controller'] = $app->share(function(Application $app){
 	return new Ordering\Controller\OrderController($app);
 });
+$app['orderAction.controller'] = $app->share(function(Application $app){
+    return new Ordering\Controller\OrderActionController($app);
+});

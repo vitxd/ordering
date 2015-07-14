@@ -1,10 +1,23 @@
 {% extends 'layouts/core.twig' %}
+
+{% use 'order/extends/shopping-cart.twig' %}
+
 {% block content %}
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Check Out</h1>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Check Out</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ block('shopping_cart') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>var _ACTIONS_URL = '{{ actionsUrl }}';</script>
+    <script src="/js/order/main.js"></script>
 {% endblock %}
